@@ -33,7 +33,7 @@ jobs:
           echo "$CERTIFICATE_BASE64" | base64 --decode > apple.cer
           security import apple.cer -P "$CERTIFICATE_PASSWORD" -A
 
-      # Step 6: Set up Provisioning Profile
+      # Passo 4: Set up Provisioning Profile
       - name: Set up Provisioning Profile
         env:
           MOBILEPROVISION_BASE64: ${{ secrets.APPLE_PROFILE }}
@@ -42,18 +42,18 @@ jobs:
           mkdir -p ~/Library/MobileDevice/Provisioning\ Profiles
           mv ApplePie.mobileprovision ~/Library/MobileDevice/Provisioning\ Profiles/
           
-      # Passo 3: Configurar a versão do Xcode
+      # Passo 5: Configurar a versão do Xcode
       - name: Install CocoaPods
         run: pod install --repo-update
 
-      # Passo 4: Executar o SwiftLint para verificar o código
+      # Passo 6: Executar o SwiftLint para verificar o código
       - name: Install SwiftLint
         run: |
          brew install swiftlint
       - name: Run SwiftLint
         run: swiftlint
 
-      # Passo 5: Realizar o build e executar testes unitários
+      # Passo 7: Realizar o build e executar testes unitários
       - name: Build and test the project
         run: |
           xcodebuild -workspace "ApplePie.xcworkspace" \
@@ -61,7 +61,7 @@ jobs:
           -destination 'platform=iOS Simulator,name=iPhone 14,OS=16.0' \
           clean test CODE_SIGNING_ALLOWED=NO
 
-      # Passo 6: Exibir resultados de teste
+      # Passo 8: Exibir resultados de teste
       - name: Show test results
         if: always()
         run: |
