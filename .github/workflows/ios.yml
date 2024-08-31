@@ -23,7 +23,25 @@ jobs:
         uses: maxim-lobanov/setup-xcode@v1
         with:
           xcode-version: '15.4' # Altere conforme a versão necessária para o seu projeto
-     
+
+      # Passo 3: Set up Signing Certificate
+      - name: Set up Signing Certificate
+        env:
+          CERTIFICATE_BASE64: ${{ secrets.APPLE_CERTIFICATE }}
+          CERTIFICATE_PASSWORD: ${{ secrets.APPLE_CERTIFICATE_PASSWORD }}
+        run: |
+          echo "$CERTIFICATE_BASE64" | base64 --decode > apple.cer
+          security import apple.cer -P "$CERTIFICATE_PASSWORD" -A
+
+      # Step 6: Set up Provisioning Profile
+      - name: Set up Provisioning Profile
+        env:
+          MOBILEPROVISION_BASE64: ${{ secrets.MOBILEPROVISION }}
+        run: |
+          echo "$MOBILEPROVISION_BASE64" | base64 --decode > ApplePie.mobileprovision
+          mkdir -p ~/Library/MobileDevice/Provisioning\ Profiles
+          mv ApplePie.mobileprovision ~/Library/MobileDevice/Provisioning\ Profiles/
+          
       # Passo 3: Configurar a versão do Xcode
       - name: Install CocoaPods
         run: pod install --repo-update
