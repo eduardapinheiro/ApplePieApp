@@ -30,8 +30,8 @@ jobs:
           CERTIFICATE_BASE64: ${{ secrets.APPLE_CERTIFICATE }}
           CERTIFICATE_PASSWORD: ${{ secrets.APPLE_CERTIFICATE_PASSWORD }}
         run: |
-          echo "$CERTIFICATE_BASE64" | base64 --decode > apple.cer
-          security import apple.cer -P "$CERTIFICATE_PASSWORD" -A
+          echo "$CERTIFICATE_BASE64" | base64 --decode > ios_development.cer
+          security import ios_development.cer -P "$CERTIFICATE_PASSWORD" -A
 
       # Passo 4: Set up Provisioning Profile
       - name: Set up Provisioning Profile
