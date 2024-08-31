@@ -23,15 +23,19 @@ jobs:
         uses: maxim-lobanov/setup-xcode@v1
         with:
           xcode-version: '15.4' # Altere conforme a versão necessária para o seu projeto
+     
+      # Passo 3: Configurar a versão do Xcode
+      - name: Install CocoaPods
+        run: pod install --repo-update
 
-      # Passo 3: Executar o SwiftLint para verificar o código
+      # Passo 4: Executar o SwiftLint para verificar o código
       - name: Install SwiftLint
         run: |
          brew install swiftlint
       - name: Run SwiftLint
         run: swiftlint
 
-      # Passo 4: Realizar o build e executar testes unitários
+      # Passo 5: Realizar o build e executar testes unitários
       - name: Build and test the project
         run: |
           xcodebuild -workspace "Apple Pie.xcworkspace" \
@@ -39,7 +43,7 @@ jobs:
           -destination 'platform=iOS Simulator,name=iPhone 14,OS=16.0' \
           clean test CODE_SIGNING_ALLOWED=NO
 
-      # Passo 5: Exibir resultados de teste
+      # Passo 6: Exibir resultados de teste
       - name: Show test results
         if: always()
         run: |
