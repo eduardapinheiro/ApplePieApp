@@ -99,6 +99,7 @@ class ApplePieGame: ObservableObject {
     func makeGuess(_ letter: String) {
         // Lógica para adivinhar uma letra
         if wordToGuess.contains(letter) {
+          guessedLetters.append(letter)
         } else {
             incorrectGuesses += 1
         }
