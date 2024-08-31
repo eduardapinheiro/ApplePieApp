@@ -1,0 +1,8 @@
+disabled_rules: # desative as regras que você não deseja usar
+  - line_length
+  - trailing_whitespace
+  - force_cast
+  - type_name
+
+opt_in_rules: # ou ative as regras que você deseja usar
+  - empty_count

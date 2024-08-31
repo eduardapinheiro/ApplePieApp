@@ -1,0 +1,48 @@
+name: iOS CI
+
+# Dispara o workflow quando há push ou pull request na branch main
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+    branches:
+      - main
+
+jobs:
+  build-and-test:
+    runs-on: macos-latest
+
+    steps:
+      # Passo 1: Clonar o repositório
+      - name: Check out the repository
+        uses: actions/checkout@v3
+
+      # Passo 2: Configurar a versão do Xcode
+      - name: Set up Xcode
+        uses: maxim-lobanov/setup-xcode@v1
+        with:
+          xcode-version: '15.4' # Altere conforme a versão necessária para o seu projeto
+
+      # Passo 3: Executar o SwiftLint para verificar o código
+      - name: Install SwiftLint
+        run: |
+         brew install swiftlint
+      - name: Run SwiftLint
+        run: swiftlint
+
+      # Passo 4: Realizar o build e executar testes unitários
+      - name: Build and test the project
+        run: |
+          xcodebuild -workspace "Apple Pie.xcworkspace" \
+          -scheme "Apple Pie" \
+          -destination 'platform=iOS Simulator,name=iPhone 14,OS=16.0' \
+          clean test CODE_SIGNING_ALLOWED=NO
+
+      # Passo 5: Exibir resultados de teste
+      - name: Show test results
+        if: always()
+        run: |
+          echo "Verifique os logs de saída para resultados detalhados de testes."
+
+
