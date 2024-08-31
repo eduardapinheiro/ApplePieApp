@@ -36,7 +36,7 @@ jobs:
       # Step 6: Set up Provisioning Profile
       - name: Set up Provisioning Profile
         env:
-          MOBILEPROVISION_BASE64: ${{ secrets.MOBILEPROVISION }}
+          MOBILEPROVISION_BASE64: ${{ secrets.APPLE_PROFILE }}
         run: |
           echo "$MOBILEPROVISION_BASE64" | base64 --decode > ApplePie.mobileprovision
           mkdir -p ~/Library/MobileDevice/Provisioning\ Profiles
