@@ -38,7 +38,7 @@ jobs:
       # Passo 5: Realizar o build e executar testes unitários
       - name: Build and test the project
         run: |
-          xcodebuild -workspace "Apple Pie.xcworkspace" \
+          xcodebuild -workspace "ApplePie.xcworkspace" \
           -scheme "ApplePie" \
           -destination 'platform=iOS Simulator,name=iPhone 14,OS=16.0' \
           clean test CODE_SIGNING_ALLOWED=NO
